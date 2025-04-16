@@ -26,36 +26,36 @@ interface FilterMoviesCardProps {
     titleFilter: string;
     genreFilter: string;
   }
-
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter}) => {
-    const [genres, setGenres] = useState([{id:'0', name:"All"}])
-}
-
-useEffect(()=>{
-    fetch( `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-    .then(res => res.json())
-    .then(json=>{
-        return json.genres
-    })
-    .then(apiGenres => {
-        setGenres ([genres[0], ...apiGenres])
-    });
-
-}, []);
-
-const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
-    e.preventDefault()
-    // Completed later
-  };
-
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleChange(e, "title", e.target.value)
-  }
-
-  const handleGenreChange = (e: SelectChangeEvent) => {
-    handleChange(e, "genre", e.target.value)
-  };
+  
+  const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter }) => {
+    const [genres, setGenres] = useState([{ id: '0', name: "All" }])
+  
+    useEffect(() => {
+      fetch(
+        `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      )
+        .then(res => res.json())
+        .then(json => {
+          return json.genres
+        })
+        .then(apiGenres => {
+          setGenres([genres[0], ...apiGenres]);
+        });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
+    const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
+      e.preventDefault()
+      // Completed later
+    };
+  
+    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+      handleChange(e, "title", e.target.value)
+    }
+  
+    const handleGenreChange = (e: SelectChangeEvent) => {
+      handleChange(e, "genre", e.target.value)
+    };
 
   return (
     <>
