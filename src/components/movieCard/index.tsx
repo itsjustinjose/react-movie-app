@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png'; // Default poster image
 import { BaseMovieProps } from "../../types/interfaces"; 
+import { Link } from "react-router-dom";
 
 // Styling for the card component
 const styles = {
@@ -31,7 +32,7 @@ const MovieCard: React.FC<BaseMovieProps> = (movie) => {
         sx={styles.media}
         image={movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : img} // Use poster or placeholder
       />
-      
+
       <CardContent>
         <Grid container> 
 
@@ -57,9 +58,12 @@ const MovieCard: React.FC<BaseMovieProps> = (movie) => {
           <FavoriteIcon color="primary" fontSize="large" /> 
         </IconButton>
 
-        <Button variant="outlined" size="medium" color="primary">
-          More Info ...  
-        </Button>
+        <Link to={`/movies/${movie.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
+
 
       </CardActions>
     </Card>

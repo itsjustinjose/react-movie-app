@@ -14,7 +14,8 @@ export interface BaseMovieProps {
     runtime: number;        
     revenue: number;        
     vote_count: number;     
-    favourite?: boolean;   
+    favourite?: boolean; 
+    genre_ids?: number[];  
 }
 
 export interface BaseMovieListProps {
@@ -25,15 +26,19 @@ export interface MovieDetailsProps extends BaseMovieProps{
     genres: {
         id: number;
         name: string;
-    }[];
-}
-
-export interface MovieDetailsProps extends BaseMovieProps{
+    }[],
     production_countries: {
         iso_3166_1: string;
         name: string;
     }[];
 }
+
+// export interface MovieDetailsProps extends BaseMovieProps{
+//     production_countries: {
+//         iso_3166_1: string;
+//         name: string;
+//     }[];
+// }
 
 export interface MovieImage {
     file_path: string;
@@ -49,6 +54,9 @@ export interface MovieImage {
     movie: MovieDetailsProps;
     images: MovieImage[];
   }
+
+  export type FilterOption = "title" | "genre";
+
 
 
   
