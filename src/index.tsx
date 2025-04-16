@@ -5,7 +5,7 @@ import {MovieImage} from './types/interfaces'
 
 import sample from './stories/sampleData'
 
-const movies =[sample, sample, sample, sample, sample, sample, sample, sample, sample, sample, sample, sample];
+// const movies =[sample, sample, sample, sample, sample, sample, sample, sample, sample, sample, sample, sample];
 
 const images: MovieImage[] = [
     { file_path: "/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg"},
