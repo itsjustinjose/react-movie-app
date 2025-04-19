@@ -9,5 +9,7 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Basic: Story = {};  // Default story
+export const Basic: Story = {
+  
+};  
 Basic.storyName = "Default";
