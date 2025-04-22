@@ -42,3 +42,15 @@ export const getMovies = () => {
       });
   };
 
+
+  
+  export const getUpComingMovies = () => { //movie id can be string or number
+    return fetch( 
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        // console.log(json.results);
+        return json.results;
+      });
+  };
