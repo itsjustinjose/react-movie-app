@@ -5,6 +5,7 @@ import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
@@ -52,6 +53,7 @@ const FavouriteMoviesPage: React.FC = () => {
     ? filterFunction(allFavourites)
     : [];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
     const updatedFilterSet =
