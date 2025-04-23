@@ -12,6 +12,7 @@ const UpcomingMovies: React.FC = () => {
     getUpcomingMovies
   );
 
+  
   if (isLoading) {
     return <Spinner />;
   }
