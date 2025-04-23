@@ -9,14 +9,17 @@ const AddToPlaylistIcon: React.FC<BaseMovieProps> = (movie) => {
 
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    context.addToPlaylist(movie);
+    context.addToMustWatch(movie);
   };
 
   return (
-    <IconButton aria-label="add to playlist" onClick={onUserSelect}>
-      <PlaylistAddIcon color="primary" fontSize="large" />
+    <IconButton 
+      aria-label="add to must watch" 
+      onClick={onUserSelect}
+      color="primary"
+    >
+      <PlaylistAddIcon fontSize="large" />
     </IconButton>
-    
   );
 };
 
