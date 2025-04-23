@@ -68,13 +68,20 @@ export const getMovie = (id: string) => {
 
 
   
-  export const getUpComingMovies = () => { //movie id can be string or number
-    return fetch( 
+  export const getUpcomingMovies = () => {
+    return fetch(
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
-      .then((res) => res.json())
-      .then((json) => {
-        // console.log(json.results);
-        return json.results;
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch upcoming movies. Response status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data.results;
+      })
+      .catch((error) => {
+        throw error;
       });
   };
