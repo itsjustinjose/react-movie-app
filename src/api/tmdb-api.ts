@@ -104,3 +104,20 @@ export const getMovie = (id: string) => {
         throw error;
       });
   };
+
+  export const getTopRatedMovies = () => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch top-rated movies. Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => data.results)
+      .catch((error) => {
+        console.error("Error fetching top-rated movies:", error);
+        throw error;
+      });
+  };
