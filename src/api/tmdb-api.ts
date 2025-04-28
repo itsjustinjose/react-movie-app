@@ -121,3 +121,20 @@ export const getMovie = (id: string) => {
         throw error;
       });
   };
+
+  export const getDiscoverTVShows = () => {
+    return fetch(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&sort_by=popularity.desc`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch TV shows. Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => data.results)
+      .catch((error) => {
+        console.error("Error fetching TV shows:", error);
+        throw error;
+      });
+  };
