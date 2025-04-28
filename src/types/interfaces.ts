@@ -83,3 +83,68 @@ export interface MovieImage {
     rating: number,
     movieId: number,
   }
+
+  export interface ActorProps {
+    id: number;
+    name: string;
+    profile_path?: string;
+    popularity: number;
+    known_for_department: string;
+    gender: number;
+    known_for: {
+        id: number;
+        title?: string;
+        name?: string;
+        poster_path?: string;
+        media_type: string;
+    }[];
+}
+
+export interface ActorListProps {
+    actors: ActorProps[];
+}
+
+export interface ActorListTemplateProps {
+    title: string;
+    actors: ActorProps[];
+    action?: (m: ActorProps) => React.ReactNode;
+}
+
+export interface DiscoverActors {
+    page: number;
+    total_pages: number;
+    total_results: number;
+    results: ActorProps[];
+}
+
+export interface ActorProfile {
+    id: number;
+    imdb_id: string;
+    birthday: string;
+    deathday: string | null;
+    name: string;
+    also_known_as: string[];
+    gender: number;
+    biography: string;
+    popularity: number;
+    place_of_birth: string;
+    profile_path: string | null;
+    adult: boolean;
+    homepage: string | null;
+}
+
+export interface ActorProfileForImages {
+    id: number;
+    profiles: {
+        aspect_ratio: number;
+        file_path: string;
+        height: number;
+        iso_639_1: string | null;
+        vote_average: number;
+        vote_count: number;
+        width: number;
+    }[];
+}
+
+
+

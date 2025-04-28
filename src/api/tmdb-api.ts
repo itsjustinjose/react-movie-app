@@ -122,19 +122,52 @@ export const getMovie = (id: string) => {
       });
   };
 
-  export const getDiscoverTVShows = () => {
+
+  export const getActorsList = () => {
     return fetch(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&sort_by=popularity.desc`
+        `https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch TV shows. Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => data.results)
-      .catch((error) => {
-        console.error("Error fetching TV shows:", error);
-        throw error;
-      });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch actors. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => data.results)
+        .catch((error) => {
+            console.error("Error fetching actors:", error);
+            throw error;
+        });
+  };
+  
+  export const getActorImages = (personId: number) => {
+    return fetch(
+        `https://api.themoviedb.org/3/person/${personId}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch actor images. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            console.error("Error fetching actor images:", error);
+            throw error;
+        });
+  };
+  
+  export const getActorDetails = (personId: number) => {
+    return fetch(
+        `https://api.themoviedb.org/3/person/${personId}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch actor details. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            console.error("Error fetching actor details:", error);
+            throw error;
+        });
   };
