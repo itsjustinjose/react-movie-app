@@ -146,5 +146,32 @@ export interface ActorProfileForImages {
     }[];
 }
 
+export interface ActorDetailsProps {
+  id: number;
+  name: string;
+  biography: string;
+  birthday: string;
+  deathday: string | null;
+  place_of_birth: string;
+  profile_path: string | null;
+  imdb_id: string;
+  known_for_department: string;
+  popularity: number;
+}
+
+export interface ActorImagesProps {
+  profiles: {
+    file_path: string;
+    aspect_ratio: number;
+    height: number;
+    width: number;
+  }[];
+}
+
+export interface ActorPageProps {
+  actor: ActorDetailsProps;
+  images: ActorImagesProps;
+}
+
 
 
