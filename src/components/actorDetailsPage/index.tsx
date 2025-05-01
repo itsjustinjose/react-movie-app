@@ -1,48 +1,85 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getActorDetails, getActorImages } from "../../api/tmdb-api";
-import Spinner from "../../components/spinner";
-import ActorHeader from "../../components/actorHeader";
-import ActorDetails from "../../components/actorDetailsPage";
-import ActorImages from "../../components/actorImages";
-import Grid from "@mui/material/Grid";
-import { ActorDetailsProps, ActorImagesProps } from "../types/interfaces";
+import React, { useState } from "react";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import CakeIcon from "@mui/icons-material/Cake";
+import StarRate from "@mui/icons-material/StarRate";
+import Typography from "@mui/material/Typography";
+import { ActorDetailsProps } from "../../types/interfaces";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Fab from "@mui/material/Fab";
+import Drawer from "@mui/material/Drawer";
+import ActorReviews from '../actorReviews';
 
-const ActorDetailsPage: React.FC = () => {
-  const { id } = useParams();
-  const actorId = parseInt(id || "");
-
-  const { data: actor, isLoading: isActorLoading, error: actorError } = 
-    useQuery<ActorDetailsProps, Error>(
-      ["actor", actorId],
-      () => getActorDetails(actorId)
-    );
-
-  const { data: images, isLoading: isImagesLoading, error: imagesError } = 
-    useQuery<ActorImagesProps, Error>(
-      ["actorImages", actorId],
-      () => getActorImages(actorId)
-    );
-
-  if (isActorLoading || isImagesLoading) return <Spinner />;
-
-  if (actorError) return <div>Error loading actor: {actorError.message}</div>;
-  if (imagesError) return <div>Error loading images: {imagesError.message}</div>;
-
-  return (
-    <>
-      {actor && <ActorHeader {...actor} />}
-      <Grid container spacing={2} style={{ padding: "2rem" }}>
-        <Grid item xs={12} md={8}>
-          {actor && <ActorDetails {...actor} />}
-        </Grid>
-        <Grid item xs={12} md={4}>
-          {images && <ActorImages {...images} />}
-        </Grid>
-      </Grid>
-    </>
-  );
+const styles = {
+    chipSet: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
+        listStyle: "none",
+        padding: 1.5,
+        margin: 0,
+    },
+    chipLabel: {
+        margin: 0.5,
+    },
+    fab: {
+        position: "fixed",
+        top: 50,
+        right: 2,
+    },
 };
 
-export default ActorDetailsPage;
+const ActorDetails: React.FC<ActorDetailsProps> = (actor) => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    return (
+        <>
+            <Typography variant="h5" component="h3">
+                Biography
+            </Typography>
+
+            <Typography variant="h6" component="p">
+                {actor.biography || "No biography available."}
+            </Typography>
+
+            <Paper component="ul" sx={styles.chipSet}>
+                <li>
+                    <Chip label="Also Known As" sx={styles.chipLabel} color="primary" />
+                </li>
+                {actor.also_known_as.map((name) => (
+                    <li key={name}>
+                        <Chip label={name} />
+                    </li>
+                ))}
+            </Paper>
+            
+            <Paper component="ul" sx={styles.chipSet}>
+                <Chip icon={<CakeIcon />} label={`Born: ${actor.birthday}`} />
+                {actor.deathday && (
+                    <Chip icon={<CakeIcon />} label={`Died: ${actor.deathday}`} />
+                )}
+                <Chip
+                    icon={<StarRate />}
+                    label={`Popularity: ${actor.popularity.toFixed(1)}`}
+                />
+                <Chip label={`From: ${actor.place_of_birth}`} />
+            </Paper>
+            
+            <Fab
+                color="secondary"
+                variant="extended"
+                onClick={() => setDrawerOpen(true)}
+                sx={styles.fab}
+            >
+                <NavigationIcon />
+                Reviews
+            </Fab>
+            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <ActorReviews {...actor} />
+            </Drawer>
+        </>
+    );
+};
+
+export default ActorDetails;

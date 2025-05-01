@@ -155,8 +155,11 @@ export interface ActorDetailsProps {
   place_of_birth: string;
   profile_path: string | null;
   imdb_id: string;
-  known_for_department: string;
+  homepage: string | null;
   popularity: number;
+  known_for_department: string;
+  also_known_as: string[];
+  gender: number;
 }
 
 export interface ActorImagesProps {

@@ -156,9 +156,9 @@ export const getMovie = (id: string) => {
         });
   };
   
-  export const getActorDetails = (personId: number) => {
+  export const getActorDetails = (actorId: number) => {
     return fetch(
-        `https://api.themoviedb.org/3/person/${personId}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+        `https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
         .then((response) => {
             if (!response.ok) {
@@ -166,8 +166,8 @@ export const getMovie = (id: string) => {
             }
             return response.json();
         })
-        .catch((error) => {
-            console.error("Error fetching actor details:", error);
-            throw error;
+        .then((data) => {
+            if (!data.id) throw new Error("Actor not found");
+            return data;
         });
-  };
+};
