@@ -140,34 +140,24 @@ export const getMovie = (id: string) => {
         });
   };
   
-  export const getActorImages = (personId: number) => {
-    return fetch(
-        `https://api.themoviedb.org/3/person/${personId}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Failed to fetch actor images. Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            console.error("Error fetching actor images:", error);
-            throw error;
-        });
-  };
-  
-  export const getActorDetails = (actorId: number) => {
-    return fetch(
-        `https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Failed to fetch actor details. Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if (!data.id) throw new Error("Actor not found");
-            return data;
-        });
+
+export const getActorDetails = (actorId: number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  )
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to fetch actor details`);
+      return response.json();
+    });
 };
+
+export const getActorImages = (actorId: number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/person/${actorId}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  )
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to fetch actor images`);
+      return response.json();
+    });
+};
+
