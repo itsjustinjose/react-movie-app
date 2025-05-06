@@ -1,40 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import PageTemplate from '../components/templateMovieListPage';
 import { getPopularMovies } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import AddToFavourites from "../components/cardIcons/addToFavourites";
 import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
-import { BaseMovieProps } from "../types/interfaces";
+import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
+import Pagination from "../components/pagination";
+import useFiltering from "../hooks/useFiltering";
+import MovieFilterUI, {
+  titleFilter,
+  genreFilter,
+} from "../components/movieFilterUI";
+
+// Filter configurations
+const titleFiltering = {
+  name: "title",
+  value: "",
+  condition: titleFilter,
+};
+const genreFiltering = {
+  name: "genre",
+  value: "0",
+  condition: genreFilter,
+};
 
 const PopularMoviesPage: React.FC = () => {
-  const { data, error, isLoading, isError } = useQuery<BaseMovieProps[], Error>(
-    'popularMovies',
-    getPopularMovies,
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
+    ['popularMovies', currentPage],
+    () => getPopularMovies(currentPage),
     {
       staleTime: 5 * 60 * 1000, // 5 minutes cache
       cacheTime: 60 * 60 * 1000, // 1 hour cache
+      keepPreviousData: true,
     }
   );
+
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+    [titleFiltering, genreFiltering]
+  );
+
+  const changeFilterValues = (type: string, value: string) => {
+    const changedFilter = { name: type, value };
+    const updatedFilterSet =
+      type === "title"
+        ? [changedFilter, filterValues[1]]
+        : [filterValues[0], changedFilter];
+    setFilterValues(updatedFilterSet);
+  };
 
   if (isLoading) return <Spinner />;
   if (isError) return <div>Error: {error.message}</div>;
 
-  const movies = data || [];
+  const movies = data?.results || [];
+  const displayedMovies = filterFunction(movies);
 
   return (
-    <PageTemplate
-      title='Popular Movies'
-      movies={movies}
-      action={(movie: BaseMovieProps) => {
-        return (
+    <>
+      <PageTemplate
+        title='Popular Movies'
+        movies={displayedMovies}
+        action={(movie: BaseMovieProps) => (
           <>
             <AddToFavourites {...movie} />
             <AddToPlaylistIcon {...movie} />
           </>
-        );
-      }}
-    />
+        )}
+      />
+      <MovieFilterUI
+        onFilterValuesChange={changeFilterValues}
+        titleFilter={filterValues[0].value}
+        genreFilter={filterValues[1].value}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data?.total_pages || 1}
+        onPageChange={setCurrentPage}
+      />
+    </>
   );
 };
 

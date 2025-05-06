@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
@@ -9,9 +9,10 @@ import MovieFilterUI, {
 import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import Pagination from "../components/pagination";
 
-//filtering
+// Filtering setup
 const titleFiltering = {
   name: "title",
   value: "",
@@ -24,19 +25,21 @@ const genreFiltering = {
 };
 
 const HomePage: React.FC = () => {
-  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>({queryKey: "discover", queryFn: getMovies});
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
-    [titleFiltering, genreFiltering]
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
+    ["discover", currentPage],
+    () => getMovies(currentPage),
+    { keepPreviousData: true }
   );
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  const { filterValues, setFilterValues, filterFunction } = useFiltering([
+    titleFiltering,
+    genreFiltering,
+  ]);
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-
+  if (isLoading) return <Spinner />;
+  if (isError) return <h1>{error.message}</h1>;
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
@@ -47,25 +50,28 @@ const HomePage: React.FC = () => {
     setFilterValues(updatedFilterSet);
   };
 
-  const movies = data ? data.results : [];
+  const movies = data?.results || [];
   const displayedMovies = filterFunction(movies);
-
 
   return (
     <>
       <PageTemplate
         title="Discover Movies"
         movies={displayedMovies}
-        action={(movie: BaseMovieProps) => {
-          return <AddToFavouritesIcon {...movie} />
-        }}
+        action={(movie: BaseMovieProps) => <AddToFavouritesIcon {...movie} />}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
       />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data?.total_pages || 1}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </>
   );
 };
+
 export default HomePage;
