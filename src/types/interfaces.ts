@@ -176,5 +176,25 @@ export interface ActorPageProps {
   images: ActorImagesProps;
 }
 
+// src/types/interfaces.ts
+export interface CastMember {
+  name: string;
+  role: string;
+  description: string;
+}
+
+export interface FantasyMovie {
+  title: string;
+  overview: string;
+  genres: string[];
+  releaseDate: string;
+  runtime: number;
+  productionCompanies: string;
+  cast: CastMember[];
+  poster: string | null;
+  magicSystem: string;
+  mythicalCreatures: string[];
+}
+
 
 
