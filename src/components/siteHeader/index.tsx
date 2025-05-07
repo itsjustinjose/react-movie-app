@@ -35,7 +35,9 @@ const SiteHeader: React.FC = () => {
     { label: "Actors", path: "/actors" },
     { label: "My Fantasy", path: "/fantasy" },
     { label: "Favorites", path: "/movies/favourites" },
+    { label: "Sign In", path: "/signin" },
   ];
+
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button, Typography, Paper, Link } from "@mui/material";
-import { signIn } from "../api/auth-api";
+import { Box, TextField, Button, Typography, Paper } from "@mui/material";
+import { signIn } from "../api/aws-api";
 import { SignInFormData } from "../types/interfaces";
+import { SxProps, Theme } from '@mui/material';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     display: "flex",
     justifyContent: "center",
@@ -31,86 +32,81 @@ const styles = {
 };
 
 const SignInPage: React.FC = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<SignInFormData>({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState<SignInFormData>({
+      username: "",  // Changed from email to username
+      password: "",
+    });
+    const [error, setError] = useState<string | null>(null);
+  
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+  
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError(null);
+      
+      try {
+        const resp  = await signIn(formData);
+        console.log(resp.token );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    
-    try {
-      await signIn(formData);
-      navigate("/"); // Redirect to home after successful sign-in
-    } catch (err) {
-      setError("Invalid email or password. Please try again.");
-    }
-  };
-
-  return (
-    <Box sx={styles.root}>
-      <Paper sx={styles.paper} elevation={3}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          Sign In
-        </Typography>
         
-        {error && (
-          <Typography color="error" align="center" sx={{ mb: 2 }}>
-            {error}
-          </Typography>
-        )}
-
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            fullWidth
-            variant="outlined"
-          />
-          
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            fullWidth
-            variant="outlined"
-          />
-          
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="large"
-            sx={styles.submitButton}
-          >
+        navigate("/");
+      } catch (err) {
+        setError("Invalid username or password. Please try again.");
+      }
+    };
+  
+    return (
+      <Box sx={styles.root}>
+        <Paper sx={styles.paper} elevation={3}>
+          <Typography variant="h4" component="h1" gutterBottom align="center">
             Sign In
-          </Button>
-        </form>
-
-        <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-          Don't have an account?{" "}
-          <Link href="/signup" color="primary">
-            Sign Up
-          </Link>
-        </Typography>
-      </Paper>
-    </Box>
-  );
-};
-
-export default SignInPage;
+          </Typography>
+          
+          {error && (
+            <Typography color="error" align="center" sx={{ mb: 2 }}>
+              {error}
+            </Typography>
+          )}
+  
+          <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
+            <TextField
+              label="Username"
+              name="username"
+              value={formData.username}  // Now matches state property
+              onChange={handleChange}
+              required
+              fullWidth
+              variant="outlined"
+            />
+            
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              fullWidth
+              variant="outlined"
+            />
+            
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              sx={styles.submitButton}
+            >
+              Sign In
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    );
+  };
+  
+  export default SignInPage;
