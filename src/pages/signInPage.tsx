@@ -4,6 +4,7 @@ import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { signIn } from "../api/aws-api";
 import { SignInFormData } from "../types/interfaces";
 import { SxProps, Theme } from '@mui/material';
+import { useUser } from "../contexts/userContext";
 
 const styles: Record<string, SxProps<Theme>> = {
   root: {
@@ -33,6 +34,7 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const SignInPage: React.FC = () => {
     const navigate = useNavigate();
+    const { setIsLoggedIn } = useUser();
     const [formData, setFormData] = useState<SignInFormData>({
       username: "",  // Changed from email to username
       password: "",
@@ -51,8 +53,7 @@ const SignInPage: React.FC = () => {
       try {
         const resp  = await signIn(formData);
         console.log(resp.token );
-
-        
+        setIsLoggedIn(true);
         navigate("/");
       } catch (err) {
         setError("Invalid username or password. Please try again.");

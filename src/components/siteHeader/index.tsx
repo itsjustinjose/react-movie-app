@@ -11,23 +11,37 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useUser } from "../../contexts/userContext"; 
 
 const styles = {
-    title: {
-      flexGrow: 1,
-    },
-  };
+  title: {
+    flexGrow: 1,
+  },
+};
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement|null>(null);
+  const { isLoggedIn, setIsLoggedIn } = useUser(); // Use context for login state
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const menuOptions = [
+  // Menu options for logged-out users
+  const loggedOutMenuOptions = [
+    { label: "Home", path: "/" },
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Popular", path: "/movies/popular" },
+    { label: "Top Rated", path: "/movies/top-rated" },
+    { label: "Actors", path: "/actors" },   
+
+    { label: "Sign In", path: "/signin" },
+  ];
+
+  // Menu options for logged-in users
+  const loggedInMenuOptions = [
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Popular", path: "/movies/popular" },
@@ -35,11 +49,16 @@ const SiteHeader: React.FC = () => {
     { label: "Actors", path: "/actors" },
     { label: "My Fantasy", path: "/fantasy" },
     { label: "Favorites", path: "/movies/favourites" },
-    { label: "Sign In", path: "/signin" },
+    { label: "Sign Out", path: "/signout" },
   ];
 
+  // Determine which menu options to display
+  const menuOptions = isLoggedIn ? loggedInMenuOptions : loggedOutMenuOptions;
 
   const handleMenuSelect = (pageURL: string) => {
+    if (pageURL === "/signout") {
+      setIsLoggedIn(false); // Handle sign-out
+    }
     navigate(pageURL);
   };
 
