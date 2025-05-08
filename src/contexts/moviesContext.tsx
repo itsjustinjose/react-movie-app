@@ -11,6 +11,7 @@ interface MovieContextInterface {
     mustWatch: number[];  
     addToMustWatch: (movie: BaseMovieProps) => void;
 }
+
 const initialContextState: MovieContextInterface = {
     favourites: [],
     addToFavourites: () => {},

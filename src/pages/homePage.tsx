@@ -24,6 +24,7 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+
 const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
