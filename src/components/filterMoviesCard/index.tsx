@@ -30,9 +30,10 @@ interface FilterMoviesCardProps {
     onUserInput: (f: FilterOption, s: string)  => void;
     titleFilter: string;
     genreFilter: string;
+    languageFilter: string; // Add languageFilter prop
   }
   
-  const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, onUserInput }) => {
+  const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, languageFilter, onUserInput }) => {
     const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres", getGenres);
   
     if (isLoading) {
@@ -45,6 +46,14 @@ interface FilterMoviesCardProps {
     if (genres[0].name !== "All") {
       genres.unshift({ id: "0", name: "All" });
     }
+  
+    const languages = [
+      { id: "en", name: "English" },
+      { id: "es", name: "Spanish" },
+      { id: "fr", name: "French" },
+      { id: "de", name: "German" },
+      { id: "zh", name: "Chinese" },
+    ]; // Example language options
   
     const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
       e.preventDefault()
@@ -59,6 +68,10 @@ interface FilterMoviesCardProps {
       handleChange(e, "genre", e.target.value)
     };
 
+    const handleLanguageChange = (e: SelectChangeEvent) => {
+      handleChange(e, "language", e.target.value); // Handle language filter change
+    };
+  
   return (
     <>
     <Card sx={styles.root} variant="outlined">
@@ -95,6 +108,24 @@ interface FilterMoviesCardProps {
             })}
           </Select>
         </FormControl>
+
+        <FormControl sx={styles.formControl}>
+            <InputLabel id="language-label">Language</InputLabel>
+            <Select
+              labelId="language-label"
+              id="language-select"
+              value={languageFilter}
+              onChange={handleLanguageChange}
+            >
+              {languages.map((language) => {
+                return (
+                  <MenuItem key={language.id} value={language.id}>
+                    {language.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
       </CardContent>
     </Card>
 

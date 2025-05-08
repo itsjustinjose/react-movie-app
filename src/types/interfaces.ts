@@ -59,7 +59,7 @@ export interface ListedMovie {
   release_date: string;
 
 }
-export type FilterOption = "title" | "genre" | "rating";
+export type FilterOption = "title" | "genre" | "language";
 
 export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
@@ -205,142 +205,7 @@ export interface FantasyMovie {
   mythicalCreatures: string[];
 }
 
-export interface TVSeriesProps {
-  id: number;
-  name: string;
-  poster_path?: string;
-  vote_average: number;
-  first_air_date: string;
-  overview: string;
-  backdrop_path?: string;
-  genre_ids: number[];
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  popularity: number;
-  vote_count: number;
-}
 
-export interface TVSeriesListProps {
-  tvSeries: TVSeriesProps[];
-}
-
-export interface TVSeriesListTemplateProps {
-  title: string;
-  tvSeries: TVSeriesProps[];
-  action?: (m: TVSeriesProps) => React.ReactNode;
-}
-
-export interface DiscoverTVSeries {
-  page: number;
-  total_pages: number;
-  total_results: number;
-  results: TVSeriesProps[];
-}
-
-export interface TVSeriesDetails {
-  id: number;
-  name: string;
-  overview: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  first_air_date: string;
-  last_air_date: string;
-  number_of_episodes: number;
-  number_of_seasons: number;
-  vote_average: number;
-  vote_count: number;
-  status: string;
-  tagline: string;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  created_by: {
-    id: number;
-    name: string;
-    profile_path: string | null;
-  }[];
-  networks: {
-    id: number;
-    name: string;
-    logo_path: string | null;
-  }[];
-  seasons: {
-    air_date: string;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string | null;
-    season_number: number;
-  }[];
-}
-
-export interface TVSeriesImages {
-  backdrops: {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string | null;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-  posters: {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string | null;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-  logos: {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string | null;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-}
-
-export interface TVSeriesCredits {
-  cast: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    character: string;
-    credit_id: string;
-    order: number;
-  }[];
-  crew: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    credit_id: string;
-    department: string;
-    job: string;
-  }[];
-}
-
-export interface TVSeriesPageProps {
-  tvSeries: TVSeriesDetails;
-  images: TVSeriesImages;
-  credits: TVSeriesCredits;
-}
 
 export interface SignInFormData {
   username: string;

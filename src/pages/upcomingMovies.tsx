@@ -1,5 +1,5 @@
 import React from "react";
-import PageTemplate from '../components/templateMovieListPage';
+import PageTemplate from "../components/templateMovieListPage";
 import { BaseMovieProps } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
@@ -10,6 +10,7 @@ import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
+  languageFilter, // Import languageFilter
 } from "../components/movieFilterUI";
 
 // Initial filter configurations
@@ -23,23 +24,32 @@ const genreFiltering = {
   value: "0",
   condition: genreFilter,
 };
+const languageFiltering = {
+  name: "language",
+  value: "all", // Default value for language filter
+  condition: languageFilter,
+};
 
 const UpcomingMovies: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<BaseMovieProps[], Error>(
-    'upcomingMovies',
+    "upcomingMovies",
     getUpcomingMovies
   );
 
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
-    [titleFiltering, genreFiltering]
-  );
+  const { filterValues, setFilterValues, filterFunction } = useFiltering([
+    titleFiltering,
+    genreFiltering,
+    languageFiltering, // Add languageFiltering
+  ]);
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value };
     const updatedFilterSet =
       type === "title"
-        ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+        ? [changedFilter, filterValues[1], filterValues[2]]
+        : type === "genre"
+        ? [filterValues[0], changedFilter, filterValues[2]]
+        : [filterValues[0], filterValues[1], changedFilter]; // Handle language filter
     setFilterValues(updatedFilterSet);
   };
 
@@ -67,6 +77,7 @@ const UpcomingMovies: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        languageFilter={filterValues[2].value} // Pass languageFilter
       />
     </>
   );
