@@ -3,6 +3,8 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import CardActions from "@mui/material/CardActions";
+import AddToActorFavouritesIcon from "../cardIcons/addToActorFavourites";
 import { ActorProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import img from '../../images/film-poster-placeholder.png';
@@ -19,16 +21,16 @@ interface ActorCardProps {
 const ActorCard: React.FC<ActorCardProps> = (props) => {
     const { actor } = props;
 
+    const imageUrl = actor.profile_path
+        ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+        : img;
+
     return (
         <Card sx={styles.card}>
             <Link to={`/actors/${actor.id}`}>
                 <CardMedia
                     sx={styles.media}
-                    image={
-                        actor.profile_path
-                            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                            : img
-                    }
+                    image={imageUrl}
                     title={actor.name}
                 />
             </Link>
@@ -43,6 +45,9 @@ const ActorCard: React.FC<ActorCardProps> = (props) => {
                     Popularity: {actor.popularity.toFixed(1)}
                 </Typography>
             </CardContent>
+            <CardActions>
+                <AddToActorFavouritesIcon {...actor} />
+            </CardActions>
         </Card>
     );
 };

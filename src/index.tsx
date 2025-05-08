@@ -18,6 +18,8 @@ import ActorDetailsPage from "./pages/actorDetailsPage";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
 import SignInPage from "./pages/signInPage";
 import { UserProvider } from "./contexts/userContext";
+import { ActorsContextProvider } from "./contexts/actorsContext";
+
 
 
 const queryClient = new QueryClient({
@@ -36,6 +38,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <UserProvider>
+        <ActorsContextProvider>
           <SiteHeader />
             <MoviesContextProvider>
               <Routes>
@@ -54,6 +57,7 @@ const App = () => {
                   <Route path="*" element={<Navigate to="/" />} />
               </Routes>
           </MoviesContextProvider>
+          </ActorsContextProvider>
           </UserProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

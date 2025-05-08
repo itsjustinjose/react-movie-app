@@ -30,7 +30,7 @@ interface FilterMoviesCardProps {
     onUserInput: (f: FilterOption, s: string)  => void;
     titleFilter: string;
     genreFilter: string;
-    languageFilter: string; // Add languageFilter prop
+    languageFilter: string; 
   }
   
   const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, languageFilter, onUserInput }) => {
@@ -53,8 +53,7 @@ interface FilterMoviesCardProps {
       { id: "fr", name: "French" },
       { id: "de", name: "German" },
       { id: "zh", name: "Chinese" },
-    ]; // Example language options
-  
+    ]; 
     const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
       e.preventDefault()
         onUserInput(type, value)
@@ -69,7 +68,7 @@ interface FilterMoviesCardProps {
     };
 
     const handleLanguageChange = (e: SelectChangeEvent) => {
-      handleChange(e, "language", e.target.value); // Handle language filter change
+      handleChange(e, "language", e.target.value); 
     };
   
   return (
