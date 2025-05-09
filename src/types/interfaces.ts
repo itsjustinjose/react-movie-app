@@ -57,7 +57,6 @@ export interface ListedMovie {
   vote_average: number;
   genre_ids: number[];
   release_date: string;
-
 }
 export type FilterOption = "title" | "genre" | "language";
 
@@ -195,17 +194,12 @@ export interface CastMember {
 export interface FantasyMovie {
   title: string;
   overview: string;
-  genres: string[];
+  genre: string;
   releaseDate: string;
-  runtime: number;
+  runTime: number;
   productionCompanies: string;
   cast: CastMember[];
-  poster: string | null;
-  magicSystem: string;
-  mythicalCreatures: string[];
 }
-
-
 
 export interface SignInFormData {
   username: string;
@@ -216,5 +210,3 @@ export interface SignInResults {
   message: string;
   token: string;
 }
-
-

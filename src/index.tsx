@@ -15,10 +15,12 @@ import PopularMoviesPage from './pages/popularMoviesPage';
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import ActorsPage from "./pages/actorsPage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
-import FantasyMoviePage from "./pages/fantasyMoviePage";
 import SignInPage from "./pages/signInPage";
 import { UserProvider } from "./contexts/userContext";
 import { ActorsContextProvider } from "./contexts/actorsContext";
+import FantasyMoviesContextProvider from "./contexts/fantasyMoviesContext";
+import FantasyMoviePage from "./pages/fantasyMoviePage";
+import FantasyMovieShowPage from "./pages/fantasyMovieShowPage";
 
 
 
@@ -38,6 +40,8 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <UserProvider>
+          <FantasyMoviesContextProvider>
+          
         <ActorsContextProvider>
           <SiteHeader />
             <MoviesContextProvider>
@@ -53,11 +57,13 @@ const App = () => {
                   <Route path="/actors" element={<ActorsPage />} />
                   <Route path="/actors/:id" element={<ActorDetailsPage />} />
                   <Route path="/fantasy" element={<FantasyMoviePage />} />
+                  <Route path="/fantasyshow" element={<FantasyMovieShowPage />} />
                   <Route path="/signin" element={<SignInPage />} />
                   <Route path="*" element={<Navigate to="/" />} />
               </Routes>
           </MoviesContextProvider>
           </ActorsContextProvider>
+          </FantasyMoviesContextProvider>
           </UserProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -71,4 +77,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
-
