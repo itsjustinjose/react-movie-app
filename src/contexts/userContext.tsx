@@ -5,7 +5,10 @@ interface UserContextProps {
   setIsLoggedIn: (value: boolean) => void;
 }
 
-const UserContext = createContext<UserContextProps | undefined>(undefined);
+export const UserContext = createContext<UserContextProps>({
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+});
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

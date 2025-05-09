@@ -11,16 +11,17 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import img from '../../images/film-poster-placeholder.png';
+import img from "../../images/film-poster-placeholder.png";
 import { BaseMovieProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { UserContext } from "../../contexts/userContext";
 
 const styles = {
   card: { maxWidth: 345 },
   media: { height: 500 },
-  avatar: { backgroundColor: "rgb(255, 0, 0)" }, 
+  avatar: { backgroundColor: "rgb(255, 0, 0)" },
   avatarContainer: { display: "flex", gap: "8px" },
 };
 
@@ -31,6 +32,7 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
   const { favourites, mustWatch } = useContext(MoviesContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   const isFavourite = favourites.includes(movie.id);
   const isInPlaylist = mustWatch.includes(movie.id);
@@ -84,14 +86,16 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
+      {isLoggedIn && (
+        <CardActions disableSpacing>
+          {action(movie)}
+          <Link to={`/movies/${movie.id}`}>
+            <Button variant="outlined" size="medium" color="primary">
+              More Info ...
+            </Button>
+          </Link>
+        </CardActions>
+      )}
     </Card>
   );
 };
