@@ -21,6 +21,7 @@ import { ActorsContextProvider } from "./contexts/actorsContext";
 import FantasyMoviesContextProvider from "./contexts/fantasyMoviesContext";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
 import FantasyMovieShowPage from "./pages/fantasyMovieShowPage";
+import ReviewsPage from "./pages/getTmdbReviews";
 
 
 
@@ -60,6 +61,7 @@ const App = () => {
                   <Route path="/fantasyshow" element={<FantasyMovieShowPage />} />
                   <Route path="/signin" element={<SignInPage />} />
                   <Route path="*" element={<Navigate to="/" />} />
+                  <Route path="/myfavouritereviews" element={<ReviewsPage />} />
               </Routes>
           </MoviesContextProvider>
           </ActorsContextProvider>

@@ -50,6 +50,7 @@ const SiteHeader: React.FC = () => {
     { label: "Add Fantasy Movie", path: "/fantasy" },
     { label: "My Fantasy Movies", path: "/fantasyshow" },
     { label: "My Favorites", path: "/movies/favourites" },
+    { label: "My Reviews", path: "/myfavouritereviews" },
     { label: "Sign Out", path: "/signout" },
   ];
 
