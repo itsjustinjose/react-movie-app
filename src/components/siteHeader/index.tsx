@@ -23,7 +23,7 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedIn } = useUser(); // Use context for login state
+  const { isLoggedIn, setIsLoggedIn } = useUser(); 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
@@ -54,12 +54,12 @@ const SiteHeader: React.FC = () => {
     { label: "Sign Out", path: "/signout" },
   ];
 
-  // Determine which menu options to display
+  
   const menuOptions = isLoggedIn ? loggedInMenuOptions : loggedOutMenuOptions;
 
   const handleMenuSelect = (pageURL: string) => {
     if (pageURL === "/signout") {
-      setIsLoggedIn(false); // Handle sign-out
+      setIsLoggedIn(false); 
     }
     navigate(pageURL);
   };

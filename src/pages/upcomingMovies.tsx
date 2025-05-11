@@ -10,10 +10,10 @@ import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
-  languageFilter, // Import languageFilter
+  languageFilter, 
 } from "../components/movieFilterUI";
 
-// Initial filter configurations
+
 const titleFiltering = {
   name: "title",
   value: "",
@@ -26,7 +26,7 @@ const genreFiltering = {
 };
 const languageFiltering = {
   name: "language",
-  value: "all", // Default value for language filter
+  value: "all", 
   condition: languageFilter,
 };
 
@@ -39,7 +39,7 @@ const UpcomingMovies: React.FC = () => {
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
-    languageFiltering, // Add languageFiltering
+    languageFiltering, 
   ]);
 
   const changeFilterValues = (type: string, value: string) => {
@@ -49,7 +49,7 @@ const UpcomingMovies: React.FC = () => {
         ? [changedFilter, filterValues[1], filterValues[2]]
         : type === "genre"
         ? [filterValues[0], changedFilter, filterValues[2]]
-        : [filterValues[0], filterValues[1], changedFilter]; // Handle language filter
+        : [filterValues[0], filterValues[1], changedFilter]; 
     setFilterValues(updatedFilterSet);
   };
 
@@ -77,7 +77,7 @@ const UpcomingMovies: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
-        languageFilter={filterValues[2].value} // Pass languageFilter
+        languageFilter={filterValues[2].value} 
       />
     </>
   );

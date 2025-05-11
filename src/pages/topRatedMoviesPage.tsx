@@ -14,7 +14,7 @@ import MovieFilterUI, {
 } from "../components/movieFilterUI";
 import Pagination from "../components/pagination"; 
 
-// Filter configurations
+
 const titleFiltering = {
   name: "title",
   value: "",

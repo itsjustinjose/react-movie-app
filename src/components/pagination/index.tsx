@@ -1,7 +1,7 @@
 import React from "react";
-import Box from "@mui/material/Box"; // Import Box component for styling
+import Box from "@mui/material/Box"; 
 import { IconButton } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"; // Material-UI icon for previous
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"; 
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 interface PaginationProps {

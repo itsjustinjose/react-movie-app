@@ -36,7 +36,7 @@ const SignInPage: React.FC = () => {
     const navigate = useNavigate();
     const { setIsLoggedIn } = useUser();
     const [formData, setFormData] = useState<SignInFormData>({
-      username: "",  // Changed from email to username
+      username: "",  
       password: "",
     });
     const [error, setError] = useState<string | null>(null);
@@ -77,7 +77,7 @@ const SignInPage: React.FC = () => {
             <TextField
               label="Username"
               name="username"
-              value={formData.username}  // Now matches state property
+              value={formData.username} 
               onChange={handleChange}
               required
               fullWidth

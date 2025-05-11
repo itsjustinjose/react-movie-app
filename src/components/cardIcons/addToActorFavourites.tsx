@@ -1,9 +1,8 @@
 import React, { MouseEvent, useContext } from "react";
-import { ActorsContext } from "../../contexts/actorsContext"; // Use the correct ActorsContext
+import { ActorsContext } from "../../contexts/actorsContext"; 
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { ActorProps } from "../../types/interfaces"; // Ensure ActorProps is defined
-
+import { ActorProps } from "../../types/interfaces"; 
 const AddToActorFavouritesIcon: React.FC<ActorProps> = (actor) => {
   const context = useContext(ActorsContext);
 
@@ -13,7 +12,7 @@ const AddToActorFavouritesIcon: React.FC<ActorProps> = (actor) => {
 
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    context.addToFavourites(actor); // Add the actor to favorites
+    context.addToFavourites(actor); 
   };
 
   return (

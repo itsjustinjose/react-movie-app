@@ -8,9 +8,9 @@ import {
   Container,
   CircularProgress,
 } from "@mui/material";
-import { getFrontendReview } from "../api/tmdb-api"; // Adjust path as needed
+import { getFrontendReview } from "../api/aws-api"; 
 
-// Update to match actual API shape
+
 interface Review {
   ReviewId?: string;
   Name: string;
@@ -31,7 +31,11 @@ const ReviewsPage: React.FC = () => {
         const data = await getFrontendReview();
         setReviews(data);
       } catch (err: unknown) {
-        setError(err.message || "Failed to load reviews.");
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Failed to load reviews.");
+        }
       } finally {
         setLoading(false);
       }

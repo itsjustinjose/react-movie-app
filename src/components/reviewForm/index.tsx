@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
 import { BaseMovieProps, Review } from "../../types/interfaces";
-import { addReviewFrontend } from "../../api/tmdb-api";
+import { addReviewFrontend } from "../../api/aws-api";
 
 const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   const defaultValues = {
