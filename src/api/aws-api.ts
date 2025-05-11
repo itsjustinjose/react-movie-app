@@ -5,7 +5,7 @@ export const signIn = async (
 ): Promise<{ token: string }> => {
   try {
     const response = await fetch(
-      "https://c6v4irewna.execute-api.eu-west-1.amazonaws.com/prod/auth/signin",
+      "https://kxynk5zogi.execute-api.eu-west-1.amazonaws.com/prod/auth/signin",
       {
         method: "POST",
         headers: {
@@ -37,7 +37,7 @@ export const addReviewFrontend = async (review: unknown) => {
   try {
     console.log("Sending review to API:", review); // Debugging log
     const response = await fetch(
-      "https://3py813lr4f.execute-api.eu-west-1.amazonaws.com/prod/frontendreviews",
+      "https://c9w6drgg97.execute-api.eu-west-1.amazonaws.com/prod/frontendreviews",
       {
         method: "POST",
         mode: "no-cors",
@@ -64,7 +64,7 @@ export const addReviewFrontend = async (review: unknown) => {
 export const getFrontendReview = async () => {
   try {
     const response = await fetch(
-      "https://3py813lr4f.execute-api.eu-west-1.amazonaws.com/prod/frontendreviews",
+      "https://c9w6drgg97.execute-api.eu-west-1.amazonaws.com/prod/frontendreviews",
       {
         method: "GET",
         headers: {
