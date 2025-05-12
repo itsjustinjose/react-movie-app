@@ -2,7 +2,7 @@
 
 **Name:** Justin Jose
 
-**Demo:** ... [link to your YouTube video demonstration](https://www.youtube.com/watch?v=uZqDBKqp11I) ......
+**Demo:** ... [link to your YouTube video demonstration](https://www.youtube.com/watch?v=f6j3kKoghUQ) ......
 
 ### Overview.
 
@@ -23,7 +23,7 @@ This repository contains full stack TMDB movie app uses ReactJS library.
 - Persist movie reviews to DynamoDB.
 
 ### Data Model
-- Data entity for TVSeries
+- Data entity for Actors
 - Server state Caching
 
 ### Routing
